@@ -7,6 +7,7 @@ import {
   type RefObject,
 } from 'react'
 import { Link } from 'react-router-dom'
+import WemaginesLogo from '../components/WemaginesLogo'
 import { ROLES, type RoleId } from '../constants/roles'
 
 export interface LoginState {
@@ -447,8 +448,8 @@ export default function Login() {
         <LeftDecorSvg />
 
         <div className="relative z-[1] flex h-full min-h-0 flex-col">
-          <Link to="/" className="font-cormorant text-2xl font-semibold text-wem-accent">
-            We<span className="text-wem-text">magines</span>
+          <Link to="/" style={{ display: 'flex', alignItems: 'center' }} aria-label="Wemagines 홈">
+            <WemaginesLogo width={180} variant="dark" />
           </Link>
 
           <div className="flex min-h-0 flex-1 flex-col justify-center">

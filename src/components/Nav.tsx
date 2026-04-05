@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
+import WemaginesLogo from './WemaginesLogo'
 
 /** 홈 앵커 스크롤용 `navigate` state */
 export type HomeScrollState = {
@@ -71,11 +72,8 @@ export function Nav() {
     <>
       <header className="fixed inset-x-0 top-0 z-50 border-b border-wem-border bg-wem-bg/80 backdrop-blur-md animate-fadeUp">
         <div className="mx-auto flex max-w-fhd items-center justify-between gap-4 px-4 py-3 md:py-3.5">
-          <Link
-            to="/"
-            className="font-cormorant text-xl font-semibold tracking-tight text-wem-accent md:text-2xl"
-          >
-            Wemagines
+          <Link to="/" style={{ display: 'flex', alignItems: 'center' }} aria-label="Wemagines 홈">
+            <WemaginesLogo width={200} variant="dark" />
           </Link>
 
           <nav className="hidden items-center gap-8 md:flex" aria-label="주요 메뉴">

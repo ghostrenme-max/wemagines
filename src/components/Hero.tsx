@@ -7,11 +7,14 @@ import {
   type ReactNode,
 } from 'react'
 import { ROLES, type RoleId } from '../constants/roles'
+import { HeroLogoAnimation } from './HeroLogoAnimation'
 import { HeroSlide3Workflow } from './HeroSlide3Workflow'
 
 const SLIDE_COUNT = 4
-/** 인디케이터 1·2(메인, 직군) 자동 전환 */
-const AUTO_MS_SLIDES_1_2 = 2600
+/** 메인(로고) — 텍스트 페이드가 3.3s+0.5s까지 이어지므로 그 이후 여유 체류 */
+const AUTO_MS_SLIDE_MAIN = 6800
+/** 직군 슬라이드 자동 전환 */
+const AUTO_MS_SLIDE_ROLES = 2600
 /** 인디케이터 4(시작) — 기존과 동일한 체류 */
 const AUTO_MS_SLIDE_4 = 4000
 const SWIPE_PX = 50
@@ -42,11 +45,14 @@ function SlideShell({
   active,
   background,
   fullBleed,
+  centerTall,
   children,
 }: {
   active: boolean
   background: string
   fullBleed?: boolean
+  /** 슬라이드 1 — 로고 애니메이션 전체 높이 중앙 */
+  centerTall?: boolean
   children: ReactNode
 }) {
   return (
@@ -63,7 +69,11 @@ function SlideShell({
       <div className="pointer-events-none absolute inset-0" style={{ background }} aria-hidden />
       <div
         className={`relative z-[1] flex w-full flex-col ${
-          fullBleed ? 'h-full min-h-0 max-w-none' : 'max-w-4xl items-center justify-center text-center'
+          fullBleed
+            ? 'h-full min-h-0 max-w-none'
+            : centerTall
+              ? 'h-full min-h-0 max-w-none items-center justify-center'
+              : 'max-w-4xl items-center justify-center text-center'
         }`}
       >
         {children}
@@ -73,21 +83,7 @@ function SlideShell({
 }
 
 const slideContents: ReactNode[] = [
-  <>
-    <p className="font-dm text-[10px] font-medium uppercase tracking-[3px] text-wem-accent">
-      ANIMATION COLLABORATION PLATFORM
-    </p>
-    <h1
-      className="mt-6 max-w-5xl font-cormorant font-semibold leading-[0.95] text-wem-text"
-      style={{ fontSize: 'clamp(52px, 10vw, 110px)' }}
-    >
-      Make / <span className="italic text-wem-accent">Animation</span> /{' '}
-      <span className="italic text-wem-muted">Together</span>
-    </h1>
-    <p className="mt-8 font-noto text-[14px] font-light leading-normal text-wem-text2">
-      {ROLES.map((r) => r.label).join(' · ')}
-    </p>
-  </>,
+  null,
   <>
     <p className="font-dm text-[10px] font-medium uppercase tracking-[3px] text-wem-accent2">
       WHO WE ARE
@@ -162,6 +158,7 @@ export function Hero({ onSlideChange }: HeroProps = {}) {
   const [activeIndex, setActiveIndex] = useState(0)
   const [isPaused, setIsPaused] = useState(false)
   const [flowKey, setFlowKey] = useState(0)
+  const [slide1AnimKey, setSlide1AnimKey] = useState(0)
   const pointerStartX = useRef<number | null>(null)
   const capturingRef = useRef(false)
 
@@ -173,13 +170,26 @@ export function Hero({ onSlideChange }: HeroProps = {}) {
     prevSlideRef.current = activeIndex
   }, [activeIndex])
 
+  const prevForSlide1Ref = useRef(activeIndex)
+  useEffect(() => {
+    if (activeIndex === 0 && prevForSlide1Ref.current !== 0) {
+      setSlide1AnimKey((k) => k + 1)
+    }
+    prevForSlide1Ref.current = activeIndex
+  }, [activeIndex])
+
   useEffect(() => {
     onSlideChange?.(activeIndex)
   }, [activeIndex, onSlideChange])
 
   useEffect(() => {
     if (isPaused || activeIndex === 2) return
-    const delay = activeIndex === 3 ? AUTO_MS_SLIDE_4 : AUTO_MS_SLIDES_1_2
+    const delay =
+      activeIndex === 3
+        ? AUTO_MS_SLIDE_4
+        : activeIndex === 0
+          ? AUTO_MS_SLIDE_MAIN
+          : AUTO_MS_SLIDE_ROLES
     const id = window.setInterval(() => {
       setActiveIndex((i) => (i + 1) % SLIDE_COUNT)
     }, delay)
@@ -246,15 +256,20 @@ export function Hero({ onSlideChange }: HeroProps = {}) {
             active={activeIndex === i}
             background={SLIDE_BACKGROUNDS[i]!}
             fullBleed={i === 2}
+            centerTall={i === 0}
           >
-            {i === 2
-              ? activeIndex === 2 && (
-                  <HeroSlide3Workflow
-                    key={flowKey}
-                    onWorkflowComplete={() => setActiveIndex(3)}
-                  />
-                )
-              : slide.component}
+            {i === 0 ? (
+              <HeroLogoAnimation key={slide1AnimKey} />
+            ) : i === 2 ? (
+              activeIndex === 2 && (
+                <HeroSlide3Workflow
+                  key={flowKey}
+                  onWorkflowComplete={() => setActiveIndex(3)}
+                />
+              )
+            ) : (
+              slide.component
+            )}
           </SlideShell>
         ))}
       </div>
