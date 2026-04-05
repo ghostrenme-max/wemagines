@@ -26,6 +26,9 @@ export default {
           voice: '#34d399',
           bgm: '#a78bfa',
           writer: '#f472b6',
+          gold: '#fbbf24',
+          coral: '#f87171',
+          editor: '#38bdf8',
         },
       },
       fontFamily: {
@@ -42,10 +45,30 @@ export default {
           '0%, 100%': { opacity: '1' },
           '50%': { opacity: '0.55' },
         },
+        timelineDotGlow: {
+          '0%, 100%': { boxShadow: '0 0 0 0 rgb(167 139 250 / 0%)' },
+          '50%': { boxShadow: '0 0 14px 6px rgb(167 139 250 / 40%)' },
+        },
+        msgIn: {
+          from: { opacity: '0', transform: 'translateY(8px)' },
+          to: { opacity: '1', transform: 'translateY(0)' },
+        },
+        recBlink: {
+          '0%, 100%': { opacity: '1' },
+          '50%': { opacity: '0.35' },
+        },
+        loginPageFadeUp: {
+          from: { opacity: '0', transform: 'translateY(16px)' },
+          to: { opacity: '1', transform: 'translateY(0)' },
+        },
       },
       animation: {
         fadeUp: 'fadeUp 0.65s ease-out forwards',
         pulse: 'pulse 2s ease-in-out infinite',
+        timelineDotGlow: 'timelineDotGlow 2s ease-in-out infinite',
+        msgIn: 'msgIn 0.3s ease forwards',
+        recBlink: 'recBlink 1s ease-in-out infinite',
+        loginPageFadeUp: 'loginPageFadeUp 0.6s ease-out forwards',
       },
     },
   },

@@ -1,5 +1,6 @@
 import type { JobRole } from '../types/roles'
 import { JOB_ROLE_LABELS } from '../types/roles'
+import { getRoleById } from '../constants/roles'
 
 export interface RecruitItem {
   id: string
@@ -15,21 +16,21 @@ export interface RecruitBoardProps {
   items: RecruitItem[]
 }
 
-const rolePillClass: Record<Exclude<JobRole, 'all'>, string> = {
-  animator: 'text-wem-animator border-wem-animator/40',
-  illustrator: 'text-wem-illust border-wem-illust/40',
-  voice: 'text-wem-voice border-wem-voice/40',
-  bgm: 'text-wem-bgm border-wem-bgm/40',
-  writer: 'text-wem-writer border-wem-writer/40',
-}
-
 export function RecruitBoard({ items }: RecruitBoardProps) {
   return (
-    <section id="recruit" className="border-b border-wem-border bg-wem-bg2 px-4 py-12 md:py-16">
+    <section
+      id="recruit"
+      className="border-t border-b border-wem-border bg-wem-bg2 px-4 py-12 md:py-16"
+    >
       <div className="mx-auto max-w-fhd">
         <h2 className="font-cormorant text-2xl font-semibold text-wem-text md:text-3xl">
-          모집 게시판
+          모집 중인 팀
         </h2>
+        <div
+          className="h-0.5 w-8 rounded-[1px] bg-wem-gold"
+          style={{ marginTop: 6 }}
+          aria-hidden
+        />
         <p className="mt-2 font-noto text-sm text-wem-text2">
           팀에 필요한 직군과 남은 슬롯을 한눈에 확인하세요.
         </p>
@@ -49,14 +50,22 @@ export function RecruitBoard({ items }: RecruitBoardProps) {
                       ·
                     </span>
                     <div className="flex flex-wrap gap-1.5">
-                      {item.roles.map((r) => (
-                        <span
-                          key={r}
-                          className={`rounded border px-2 py-0.5 font-dm text-[9px] uppercase tracking-wide ${rolePillClass[r]}`}
-                        >
-                          {JOB_ROLE_LABELS[r]}
-                        </span>
-                      ))}
+                      {item.roles.map((r) => {
+                        const meta = getRoleById(r)
+                        return (
+                          <span
+                            key={r}
+                            className="rounded border px-2 py-0.5 font-dm text-[9px] uppercase tracking-wide"
+                            style={{
+                              borderColor: meta.borderColor,
+                              color: meta.color,
+                              background: meta.bgColor,
+                            }}
+                          >
+                            {JOB_ROLE_LABELS[r]}
+                          </span>
+                        )
+                      })}
                     </div>
                     <span className="w-full text-wem-muted sm:w-auto">{item.date}</span>
                   </div>
@@ -70,7 +79,7 @@ export function RecruitBoard({ items }: RecruitBoardProps) {
                       key={i}
                       className={`h-2 w-2 rounded-full border ${
                         i < item.slotsFilled
-                          ? 'border-wem-accent bg-wem-accent'
+                          ? 'border-wem-gold bg-wem-gold'
                           : 'border-wem-border bg-transparent'
                       }`}
                     />

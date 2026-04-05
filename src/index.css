@@ -22,6 +22,9 @@
   --voice: #34d399;
   --bgm: #a78bfa;
   --writer: #f472b6;
+  --gold: #fbbf24;
+  --coral: #f87171;
+  --editor: #38bdf8;
 
   --wem-bg: var(--bg);
   --wem-bg2: var(--bg2);
@@ -40,6 +43,9 @@
   --wem-voice: var(--voice);
   --wem-bgm: var(--bgm);
   --wem-writer: var(--writer);
+  --wem-gold: var(--gold);
+  --wem-coral: var(--coral);
+  --wem-editor: var(--editor);
 
   --font-cormorant: 'Cormorant Garamond', serif;
   --font-noto: 'Noto Sans KR', sans-serif;
@@ -64,6 +70,62 @@
   }
   50% {
     opacity: 0.55;
+  }
+}
+
+@keyframes heroFlowItem {
+  from {
+    opacity: 0;
+    transform: translateX(-16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes heroFlowArrow {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes heroFlowLine {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+.draw {
+  stroke-dashoffset: var(--len);
+  stroke-dasharray: var(--len);
+  animation: none;
+}
+
+.draw.go {
+  animation: drawPath var(--dur, 0.5s) ease var(--delay, 0s) forwards;
+}
+
+@keyframes drawPath {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes loginPageFadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 
@@ -98,5 +160,20 @@
   }
   .scrollbar-none::-webkit-scrollbar {
     display: none;
+  }
+
+  .messenger-scrollbar {
+    scrollbar-width: thin;
+    scrollbar-color: var(--border) transparent;
+  }
+  .messenger-scrollbar::-webkit-scrollbar {
+    width: 6px;
+  }
+  .messenger-scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  .messenger-scrollbar::-webkit-scrollbar-thumb {
+    background: var(--border);
+    border-radius: 3px;
   }
 }

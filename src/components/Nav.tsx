@@ -1,15 +1,50 @@
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 
-const NAV_LINKS = [
-  { label: '크리에이터', href: '#creators' },
-  { label: '모집 게시판', href: '#recruit' },
-  { label: '작품', href: '#works' },
-  { label: '팀 매칭', href: '#match' },
-  { label: '로그인', href: '#login' },
+/** 홈 앵커 스크롤용 `navigate` state */
+export type HomeScrollState = {
+  scrollTo?: string
+}
+
+const SECTION_LINKS = [
+  { label: '크리에이터', id: 'creators' },
+  { label: '모집 게시판', id: 'recruit' },
+  { label: '작품', id: 'showcase' },
+  { label: '오디션', id: 'audition' },
 ] as const
+
+const DRAWER_CLOSE_MS = 280
 
 export function Nav() {
   const [open, setOpen] = useState(false)
+  const location = useLocation()
+  const navigate = useNavigate()
+
+  const scrollToSectionId = useCallback(
+    (sectionId: string) => {
+      document.getElementById(sectionId)?.scrollIntoView({ behavior: 'smooth' })
+    },
+    [],
+  )
+
+  const goToHomeSection = useCallback(
+    (sectionId: string, afterDrawerClose: boolean) => {
+      const run = () => {
+        if (location.pathname === '/') {
+          scrollToSectionId(sectionId)
+        } else {
+          navigate('/', { state: { scrollTo: sectionId } satisfies HomeScrollState })
+        }
+      }
+      if (afterDrawerClose) {
+        setOpen(false)
+        window.setTimeout(run, DRAWER_CLOSE_MS)
+      } else {
+        run()
+      }
+    },
+    [location.pathname, navigate, scrollToSectionId],
+  )
 
   useEffect(() => {
     if (!open) return
@@ -24,40 +59,52 @@ export function Nav() {
     }
   }, [open])
 
+  const loginButtonClass =
+    'inline-flex items-center justify-center border border-wem-border2 bg-transparent font-dm text-[11px] text-wem-text2 transition-colors hover:border-wem-accent hover:text-wem-accent'
+  const loginStyle = {
+    borderRadius: 4,
+    letterSpacing: '1px',
+    padding: '8px 18px',
+  } as const
+
   return (
     <>
       <header className="fixed inset-x-0 top-0 z-50 border-b border-wem-border bg-wem-bg/80 backdrop-blur-md animate-fadeUp">
         <div className="mx-auto flex max-w-fhd items-center justify-between gap-4 px-4 py-3 md:py-3.5">
-          <a
-            href="#"
+          <Link
+            to="/"
             className="font-cormorant text-xl font-semibold tracking-tight text-wem-accent md:text-2xl"
           >
             Wemagines
-          </a>
+          </Link>
 
-          <nav
-            className="hidden items-center gap-8 md:flex"
-            aria-label="주요 메뉴"
-          >
-            {NAV_LINKS.map((link) => (
-              <a
-                key={link.href}
-                href={link.href}
+          <nav className="hidden items-center gap-8 md:flex" aria-label="주요 메뉴">
+            {SECTION_LINKS.map((item) => (
+              <button
+                key={item.id}
+                type="button"
                 className="font-noto text-sm text-wem-text2 transition-colors hover:text-wem-text"
+                onClick={() => goToHomeSection(item.id, false)}
               >
-                {link.label}
-              </a>
+                {item.label}
+              </button>
             ))}
+            <Link
+              to="/messenger"
+              className="font-noto text-sm text-wem-text2 transition-colors hover:text-wem-text"
+            >
+              팀 채팅
+            </Link>
           </nav>
 
           <div className="flex items-center gap-3">
-            <a
-              href="#start"
-              className="hidden rounded border border-transparent bg-wem-accent px-3 py-1.5 font-noto text-sm font-medium text-wem-bg transition-opacity hover:opacity-90 md:inline-flex"
-              style={{ borderRadius: 4 }}
+            <Link
+              to="/login"
+              className={`${loginButtonClass} hidden md:inline-flex`}
+              style={loginStyle}
             >
-              시작하기
-            </a>
+              로그인
+            </Link>
 
             <button
               type="button"
@@ -97,28 +144,33 @@ export function Nav() {
                 닫기
               </button>
             </div>
-            <nav className="flex flex-1 flex-col gap-1 p-3" aria-label="모바일 메뉴">
-              {NAV_LINKS.map((link) => (
-                <a
-                  key={link.href}
-                  href={link.href}
-                  className="rounded px-3 py-3 font-noto text-wem-text transition-colors hover:bg-wem-border/40"
-                  onClick={() => setOpen(false)}
+            <nav className="flex flex-1 flex-col gap-1 overflow-y-auto p-3" aria-label="모바일 메뉴">
+              {SECTION_LINKS.map((item) => (
+                <button
+                  key={item.id}
+                  type="button"
+                  className="rounded px-3 py-3 text-left font-noto text-wem-text transition-colors hover:bg-wem-border/40"
+                  onClick={() => goToHomeSection(item.id, true)}
                 >
-                  {link.label}
-                </a>
+                  {item.label}
+                </button>
               ))}
-            </nav>
-            <div className="border-t border-wem-border p-4">
-              <a
-                href="#start"
-                className="block w-full rounded bg-wem-accent py-2.5 text-center font-noto text-sm font-medium text-wem-bg"
-                style={{ borderRadius: 4 }}
+              <Link
+                to="/messenger"
+                className="rounded px-3 py-3 font-noto text-wem-text transition-colors hover:bg-wem-border/40"
                 onClick={() => setOpen(false)}
               >
-                시작하기
-              </a>
-            </div>
+                팀 채팅
+              </Link>
+              <Link
+                to="/login"
+                className={`${loginButtonClass} mt-1 w-full`}
+                style={loginStyle}
+                onClick={() => setOpen(false)}
+              >
+                로그인
+              </Link>
+            </nav>
           </div>
         </div>
       )}

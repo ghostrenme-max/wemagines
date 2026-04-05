@@ -1,5 +1,5 @@
 import type { JobRole } from '../types/roles'
-import { JOB_ROLE_LABELS } from '../types/roles'
+import { getRoleById } from '../constants/roles'
 import { WorkThumbIcon } from './WorkThumbIcons'
 
 export interface CreatorCardProps {
@@ -11,38 +11,6 @@ export interface CreatorCardProps {
   isOpen: boolean
 }
 
-const roleBarClass: Record<CreatorCardProps['role'], string> = {
-  animator: 'bg-wem-animator',
-  illustrator: 'bg-wem-illust',
-  voice: 'bg-wem-voice',
-  bgm: 'bg-wem-bgm',
-  writer: 'bg-wem-writer',
-}
-
-const roleAvatarClass: Record<CreatorCardProps['role'], string> = {
-  animator: 'bg-wem-animator',
-  illustrator: 'bg-wem-illust',
-  voice: 'bg-wem-voice',
-  bgm: 'bg-wem-bgm',
-  writer: 'bg-wem-writer',
-}
-
-const roleBadgeClass: Record<CreatorCardProps['role'], string> = {
-  animator: 'border-wem-animator/50 text-wem-animator bg-wem-animator/15',
-  illustrator: 'border-wem-illust/50 text-wem-illust bg-wem-illust/15',
-  voice: 'border-wem-voice/50 text-wem-voice bg-wem-voice/15',
-  bgm: 'border-wem-bgm/50 text-wem-bgm bg-wem-bgm/15',
-  writer: 'border-wem-writer/50 text-wem-writer bg-wem-writer/15',
-}
-
-const roleHoverBorder: Record<CreatorCardProps['role'], string> = {
-  animator: 'hover:border-wem-animator',
-  illustrator: 'hover:border-wem-illust',
-  voice: 'hover:border-wem-voice',
-  bgm: 'hover:border-wem-bgm',
-  writer: 'hover:border-wem-writer',
-}
-
 export function CreatorCard({
   name,
   handle,
@@ -51,19 +19,27 @@ export function CreatorCard({
   creditCount,
   isOpen,
 }: CreatorCardProps) {
+  const meta = getRoleById(role)
+
   return (
     <article
-      className={`relative flex overflow-hidden border border-wem-border transition-[border-color] duration-200 ${roleHoverBorder[role]}`}
+      className="group relative flex overflow-hidden border border-wem-border transition-[border-color] duration-200"
       style={{
         background: 'linear-gradient(135deg, #16162a 0%, #1a1a2e 100%)',
+        ['--role-c' as string]: meta.color,
       }}
     >
-      <div className={`w-0.5 shrink-0 self-stretch ${roleBarClass[role]}`} aria-hidden />
+      <div
+        className="w-0.5 shrink-0 self-stretch transition-opacity group-hover:opacity-90"
+        style={{ backgroundColor: meta.color }}
+        aria-hidden
+      />
 
       <div className="min-w-0 flex-1 p-4 md:p-5">
         <div className="flex gap-3">
           <div
-            className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-full font-cormorant text-lg font-semibold text-wem-bg ${roleAvatarClass[role]}`}
+            className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full font-cormorant text-lg font-semibold text-wem-bg transition-opacity group-hover:opacity-90"
+            style={{ backgroundColor: meta.color }}
             aria-hidden
           >
             {name.slice(0, 1)}
@@ -74,9 +50,14 @@ export function CreatorCard({
               <span className="font-dm text-xs text-wem-muted">{handle}</span>
             </div>
             <span
-              className={`mt-1 inline-block rounded border px-2 py-0.5 font-dm text-[9px] font-medium uppercase tracking-wider ${roleBadgeClass[role]}`}
+              className="mt-1 inline-block rounded border px-2 py-0.5 font-dm text-[9px] font-medium uppercase tracking-wider"
+              style={{
+                borderColor: meta.borderColor,
+                color: meta.color,
+                background: meta.bgColor,
+              }}
             >
-              {JOB_ROLE_LABELS[role]}
+              {meta.label}
             </span>
           </div>
         </div>
@@ -99,9 +80,11 @@ export function CreatorCard({
           <span className="font-noto text-xs text-wem-text2">
             참여작 <span className="text-wem-text">{creditCount}</span>편
           </span>
-          <span className="flex items-center gap-1.5 font-noto text-xs text-wem-text2">
+          <span
+            className={`flex items-center gap-1.5 font-noto text-xs ${isOpen ? 'text-wem-gold' : 'text-wem-coral'}`}
+          >
             <span
-              className={`h-1.5 w-1.5 rounded-full ${isOpen ? 'bg-wem-accent3' : 'bg-wem-muted'}`}
+              className={`h-1.5 w-1.5 shrink-0 rounded-full ${isOpen ? 'bg-wem-gold shadow-[0_0_6px_rgba(251,191,36,0.5)]' : 'bg-wem-coral'}`}
               aria-hidden
             />
             {isOpen ? '협업가능' : '현재마감'}
