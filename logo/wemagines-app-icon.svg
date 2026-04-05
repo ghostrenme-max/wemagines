@@ -1,0 +1,28 @@
+<svg width="512" height="512" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="120" height="120" rx="24" fill="#111128"/>
+
+  <!-- W 외곽 -->
+  <path d="M14 30 Q12 20 22 20 Q32 20 35 30 L46 64 L60 38 L74 64 L85 30 Q88 20 98 20 Q108 20 106 30 L106 80 Q106 86 100 86 L20 86 Q14 86 14 80 Z"
+    stroke="#A78BFA" stroke-width="3.5" fill="none"
+    stroke-linecap="round" stroke-linejoin="round"/>
+
+  <!-- 중앙 V 골드 -->
+  <path d="M46 64 L60 38 L74 64"
+    stroke="#FBBF24" stroke-width="4"
+    stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+
+  <!-- 베이스라인 좌우 -->
+  <line x1="6" y1="86" x2="18" y2="86" stroke="#A78BFA" stroke-width="2.5" stroke-linecap="round"/>
+  <line x1="102" y1="86" x2="114" y2="86" stroke="#A78BFA" stroke-width="2.5" stroke-linecap="round"/>
+
+  <!-- 노드 라인 -->
+  <line x1="14" y1="102" x2="106" y2="102" stroke="#2A2A4A" stroke-width="1"/>
+
+  <!-- 노드 6개 -->
+  <circle cx="22" cy="102" r="4" stroke="#C4A87A" stroke-width="1.8" fill="none"/>
+  <circle cx="36" cy="102" r="4" stroke="#FB923C" stroke-width="1.8" fill="none"/>
+  <circle cx="50" cy="102" r="4" fill="#FBBF24" stroke="#FBBF24" stroke-width="1.8"/>
+  <circle cx="64" cy="102" r="4" stroke="#34D399" stroke-width="1.8" fill="none"/>
+  <circle cx="78" cy="102" r="4" stroke="#A78BFA" stroke-width="1.8" fill="none"/>
+  <circle cx="92" cy="102" r="4" stroke="#38BDF8" stroke-width="1.8" fill="none"/>
+</svg>

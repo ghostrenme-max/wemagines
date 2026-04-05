@@ -1,0 +1,34 @@
+<svg width="400" height="400" viewBox="0 0 160 160" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="160" height="160" fill="#0A0A14"/>
+
+  <!-- W 외곽 -->
+  <path d="M18 32 Q16 16 30 16 Q44 16 48 32 L62 80 L80 44 L98 80 L112 32 Q116 16 130 16 Q144 16 142 32 L142 96 Q142 108 130 108 L30 108 Q18 108 18 96 Z"
+    stroke="#A78BFA" stroke-width="5" fill="none"
+    stroke-linecap="round" stroke-linejoin="round"/>
+
+  <!-- 중앙 V 골드 -->
+  <path d="M62 80 L80 44 L98 80"
+    stroke="#FBBF24" stroke-width="5.5"
+    stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+
+  <!-- 베이스라인 좌 -->
+  <line x1="6" y1="108" x2="24" y2="108" stroke="#A78BFA" stroke-width="3.5" stroke-linecap="round"/>
+  <!-- 베이스라인 우 -->
+  <line x1="136" y1="108" x2="154" y2="108" stroke="#A78BFA" stroke-width="3.5" stroke-linecap="round"/>
+
+  <!-- 노드 연결 라인 -->
+  <line x1="18" y1="132" x2="142" y2="132" stroke="#1E1E35" stroke-width="1.2"/>
+
+  <!-- 스토리 작가 -->
+  <circle cx="28" cy="132" r="6" stroke="#C4A87A" stroke-width="2" fill="none"/>
+  <!-- 작화 -->
+  <circle cx="52" cy="132" r="6" stroke="#FB923C" stroke-width="2" fill="none"/>
+  <!-- 애니메이터 (골드 채움) -->
+  <circle cx="76" cy="132" r="6" fill="#FBBF24" stroke="#FBBF24" stroke-width="2"/>
+  <!-- 성우 -->
+  <circle cx="100" cy="132" r="6" stroke="#34D399" stroke-width="2" fill="none"/>
+  <!-- 사운드 -->
+  <circle cx="124" cy="132" r="6" stroke="#A78BFA" stroke-width="2" fill="none"/>
+  <!-- 편집자 -->
+  <circle cx="148" cy="132" r="6" stroke="#38BDF8" stroke-width="2" fill="none"/>
+</svg>

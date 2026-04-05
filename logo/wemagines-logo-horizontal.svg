@@ -1,0 +1,43 @@
+<svg width="1120" height="220" viewBox="0 0 560 110" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="560" height="110" fill="#0A0A14"/>
+
+  <!-- W 마크 -->
+  <path d="M8 20 Q6 10 16 10 Q26 10 29 20 L40 58 L50 32 L60 58 L71 20 Q74 10 84 10 Q94 10 92 20 L92 72 Q92 80 84 80 L16 80 Q8 80 8 72 Z"
+    stroke="#A78BFA" stroke-width="3.5" fill="none"
+    stroke-linecap="round" stroke-linejoin="round"/>
+
+  <!-- 중앙 V 골드 -->
+  <path d="M40 58 L50 32 L60 58"
+    stroke="#FBBF24" stroke-width="4"
+    stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+
+  <!-- 베이스라인 좌우 -->
+  <line x1="2" y1="80" x2="12" y2="80" stroke="#A78BFA" stroke-width="2.5" stroke-linecap="round"/>
+  <line x1="88" y1="80" x2="98" y2="80" stroke="#A78BFA" stroke-width="2.5" stroke-linecap="round"/>
+
+  <!-- 노드 라인 -->
+  <line x1="8" y1="97" x2="92" y2="97" stroke="#1E1E35" stroke-width="1"/>
+
+  <!-- 노드 6개 -->
+  <circle cx="14" cy="97" r="4" stroke="#C4A87A" stroke-width="1.5" fill="none"/>
+  <circle cx="27" cy="97" r="4" stroke="#FB923C" stroke-width="1.5" fill="none"/>
+  <circle cx="40" cy="97" r="4" fill="#FBBF24" stroke="#FBBF24" stroke-width="1.5"/>
+  <circle cx="53" cy="97" r="4" stroke="#34D399" stroke-width="1.5" fill="none"/>
+  <circle cx="66" cy="97" r="4" stroke="#A78BFA" stroke-width="1.5" fill="none"/>
+  <circle cx="79" cy="97" r="4" stroke="#38BDF8" stroke-width="1.5" fill="none"/>
+
+  <!-- 구분선 -->
+  <line x1="112" y1="12" x2="112" y2="82" stroke="#1E1E35" stroke-width="0.8"/>
+
+  <!-- We -->
+  <text x="128" y="62" font-family="Georgia, serif" font-size="42" font-style="italic" font-weight="400" fill="#A78BFA" letter-spacing="1">We</text>
+
+  <!-- magines -->
+  <text x="200" y="62" font-family="Georgia, serif" font-size="42" font-weight="400" fill="#F0EEFF" letter-spacing="1">magines</text>
+
+  <!-- 하단 라인 -->
+  <line x1="128" y1="74" x2="556" y2="74" stroke="#1E1E35" stroke-width="0.8"/>
+
+  <!-- 태그라인 -->
+  <text x="128" y="88" font-family="monospace" font-size="8" fill="#3D3D6A" letter-spacing="3">MAKE · ANIMATION · TOGETHER</text>
+</svg>
